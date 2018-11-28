@@ -73,13 +73,82 @@ for (var i = 0; i < 8; i++) {
   announcements.push(generatingAnnouncement(i, ANNOUNCEMENT_TITLE[i], ANNOUNCEMENT_TYPE, ANNOUNCEMENT_CHECKIN, ANNOUNCEMENT_CHECKOUT, ANNOUNCEMENT_FEATURES, ANNOUNCEMENT_DESCRIPTION, ANNOUNCEMENT_PHOTOS));
 }
 
-// включение активного режима карты
-var mapActive = document.querySelector('.map');
-mapActive.classList.remove('map--faded');
+// НАЧАЛО ** АКТИВАЦИЯ И ДЕАКТИВАЦИЯ КАРТЫ И ФОРМЫ
+var ENTER_KEYCODE = 13;
+
+var map = document.querySelector('.map');
+var filtersMap = document.querySelectorAll('.map__filter');
+var form = document.querySelector('.ad-form');
+var fieldsetsForm = document.querySelectorAll('.ad-form__element');
+var mapMainPointer = document.querySelector('.map__pin--main');
+var addressPointer = document.querySelector('#address');
+
+// функция изменения disabled у полей форм
+var changeDisabled = function (fieldsets, isDisabled) {
+  for (var l = 0; l < fieldsets.length; l++) {
+    fieldsets[l].disabled = isDisabled;
+  }
+};
+
+// функция активации карты и формы
+var activateMap = function () {
+  map.classList.remove('map--faded');
+  form.classList.remove('ad-form--disabled');
+  changeDisabled(fieldsetsForm, false);
+  changeDisabled(filtersMap, false);
+};
+
+// функция деактивации карты и формы
+var deactivateMap = function () {
+  map.classList.add('map--faded');
+  form.classList.add('ad-form--disabled');
+  changeDisabled(fieldsetsForm, true);
+  changeDisabled(filtersMap, true);
+};
+
+// функция передачи координат метки в поле адреса
+var SIZE_PIN_X = 65;
+var SIZE_PIN_Y = 65;
+
+var setAdress = function () {
+  var locationX; // координата X
+  var locationY; // координата Y
+  var arrowSize = 0; // размер стрелки маркера по умолчанию
+
+  addressPointer.readOnly = true; // устанавливаем поле только для чтения
+
+  if (!map.classList.contains('map--faded')) { // если карта активна, то при размере учитывать стрелку
+    arrowSize = parseInt(getComputedStyle(mapMainPointer, ':after').height, 10);
+  }
+
+  locationX = mapMainPointer.offsetLeft + SIZE_PIN_X / 2;
+  locationY = mapMainPointer.offsetTop + SIZE_PIN_Y + arrowSize;
+  addressPointer.value = locationX + ', ' + locationY;
+};
+
+// активация карты и формы при нажатии на кнопку
+mapMainPointer.addEventListener('mouseup', function () {
+  activateMap();
+  setAdress();
+});
+
+mapMainPointer.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    activateMap();
+    setAdress();
+  }
+});
+
+// деактивация карты и формы при загрузке DOM дерева
+document.addEventListener('DOMContentLoaded', function () {
+  deactivateMap();
+  setAdress();
+});
+// КОНЕЦ ** АКТИВАЦИЯ И ДЕАКТИВАЦИЯ КАРТЫ И ФОРМЫ
 
 // ОТРИСОВКА МЕТОК НА КАРТЕ
 // список меток на карте
-var similarListPins = mapActive.querySelector('.map__pins');
+var similarListPins = map.querySelector('.map__pins');
 
 // шаблон метки
 var similarMapPin = document.querySelector('#pin').content.querySelector('.map__pin');
@@ -149,7 +218,6 @@ var renderCardAnnouncement = function (announcement) {
     announcementElementCard.querySelector('.popup__features').remove(); // удаляем блок если данных нет
   }
 
-
   announcementElementCard.querySelector('.popup__description').textContent = announcement.offer.description;
 
   // вставляем изображения в описании
@@ -170,5 +238,61 @@ var renderCardAnnouncement = function (announcement) {
   return announcementElementCard;
 };
 
-// отрисовываем карточку объявления c индексом 0
-mapActive.insertBefore(renderCardAnnouncement(announcements[0]), mapActive.querySelector('.map__filters-container'));
+// НАЧАЛО ** ОТКРЫТИЕ И ЗАКРЫТИЕ ОБЪЯВЛЕНИЙ
+var ESC_KEYCODE = 27;
+
+var pins = document.querySelectorAll('.map__pins [type="button"]');
+
+var onPopupEscPress = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    closePopup();
+  }
+};
+
+// функция поиска открытого объявления
+var findPopup = function () {
+  return document.querySelector('.popup');
+};
+
+// функция поиска кнопки закрыть открытого объявления
+var findPopupClose = function () {
+  return document.querySelector('.popup__close');
+};
+
+// функция удаления объявления
+var closePopup = function () {
+  var shownCard = findPopup();
+  if (shownCard) {
+    shownCard.remove();
+    document.removeEventListener('keydown', onPopupEscPress);
+  }
+};
+
+// функция открытия объявления
+var openPopup = function (index) {
+  // закрываем открытое объявление
+  closePopup();
+  // отрисовываем карточку объявления c индексом index
+  map.insertBefore(renderCardAnnouncement(announcements[index]), map.querySelector('.map__filters-container'));
+
+  // сразу ищем кнопку закрыть и вешаем на нее событие закрытия
+  var cardClose = findPopupClose();
+  cardClose.addEventListener('click', function () {
+    closePopup();
+  });
+
+  document.addEventListener('keydown', onPopupEscPress);
+};
+
+// вешаем обработчики событий на объявления на карте
+for (var m = 0; m < pins.length; m++) {
+  pins[m].addEventListener('click', (function (el) {
+    return function () {
+      openPopup(el);
+      return false;
+    };
+  })(m));
+}
+
+// КОНЕЦ ** ОТКРЫТИЕ И ЗАКРЫТИЕ ОБЪЯВЛЕНИЙ
+
