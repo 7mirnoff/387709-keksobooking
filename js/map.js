@@ -292,7 +292,14 @@ for (var m = 0; m < pins.length; m++) {
       return false;
     };
   })(m));
+  pins[m].addEventListener('keydown', (function (el) {
+    return function (evt) {
+      if (evt.keyCode === ENTER_KEYCODE) {
+        openPopup(el);
+      }
+      return false;
+    };
+  })(m));
 }
 
 // КОНЕЦ ** ОТКРЫТИЕ И ЗАКРЫТИЕ ОБЪЯВЛЕНИЙ
-
