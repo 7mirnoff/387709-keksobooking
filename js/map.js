@@ -131,6 +131,7 @@ var setAdress = function () {
 var onMainPinFirstClick = function () {
   activateMap();
   setAdress();
+  renderPins(announcements);
   mapMainPointer.removeEventListener('mouseup', onMainPinFirstClick);
 };
 
@@ -189,8 +190,6 @@ function renderPins(data) {
   });
   similarListPins.appendChild(fragment);
 }
-
-renderPins(announcements);
 
 // ОТРИСОВКА ОБЪЯВЛЕНИЯ
 // шаблон карточки объявления
