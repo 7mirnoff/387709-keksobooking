@@ -139,6 +139,7 @@ var onMainPinFirstEnterPress = function (evt) {
   if (evt.keyCode === ENTER_KEYCODE) {
     activateMap();
     setAdress();
+    renderPins(announcements);
     mapMainPointer.removeEventListener('keydown', onMainPinFirstEnterPress);
   }
 };
