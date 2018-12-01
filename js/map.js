@@ -333,6 +333,8 @@ var changeMinPrice = function () {
   priceInput.min = priceRoomMap[valueSelectedTypeOption];
 };
 
+changeMinPrice();
+
 selectType.addEventListener('change', function () {
   changeMinPrice();
 });
