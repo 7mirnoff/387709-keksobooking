@@ -61,7 +61,7 @@ var generatingAnnouncement = function (avatar, title, type, checkin, checkout, f
     },
     location: {
       x: generatingRandomValue(0, mapSizeX),
-      y: generatingRandomValue(130, 630)
+      y: generatingRandomValue(130, 560)
     }
   };
   return announcement;
@@ -128,25 +128,6 @@ var setAdress = function () {
   addressPointer.value = locationX + ', ' + locationY;
 };
 
-var onMainPinFirstClick = function () {
-  activateMap();
-  setAdress();
-  renderPins(announcements);
-  mapMainPointer.removeEventListener('mouseup', onMainPinFirstClick);
-};
-
-var onMainPinFirstEnterPress = function (evt) {
-  if (evt.keyCode === ENTER_KEYCODE) {
-    activateMap();
-    setAdress();
-    renderPins(announcements);
-    mapMainPointer.removeEventListener('keydown', onMainPinFirstEnterPress);
-  }
-};
-// активация карты и формы при нажатии на кнопку
-mapMainPointer.addEventListener('mouseup', onMainPinFirstClick);
-mapMainPointer.addEventListener('keydown', onMainPinFirstEnterPress);
-
 // деактивация карты и формы при загрузке DOM дерева
 document.addEventListener('DOMContentLoaded', function () {
   deactivateMap();
@@ -168,7 +149,7 @@ var createMapPin = function (announcement) {
   var announcementElementPin = similarMapPin.cloneNode(true);
 
   announcementElementPin.style.left = announcement.location.x - SIZE_PIN_X / 2 + 'px';
-  announcementElementPin.style.top = announcement.location.y - SIZE_PIN_Y + 'px';
+  announcementElementPin.style.top = announcement.location.y + SIZE_PIN_Y + 'px';
   announcementElementPin.querySelector('img').src = announcement.author.avatar;
   announcementElementPin.querySelector('img').alt = announcement.offer.title;
 
@@ -392,3 +373,84 @@ selectTimein.addEventListener('change', function () {
 selectTimeout.addEventListener('change', function () {
   synchronizationSelectValue(selectTimeout, selectTimein);
 });
+
+// НАЧАЛО DRAG AND DROP
+
+var isFirstMove = true;
+
+var createRangeValueCords = function (cords, min, max) {
+  if (cords <= min) {
+    cords = min;
+  } else if (cords >= max) {
+    cords = max;
+  }
+  return cords;
+};
+
+mapMainPointer.addEventListener('mousedown', function (evt) {
+  evt.preventDefault();
+
+  var startCoords = {
+    x: evt.clientX,
+    y: evt.clientY
+  };
+
+  var onMouseMove = function (moveEvt) {
+    moveEvt.preventDefault();
+
+    var shift = {
+      x: startCoords.x - moveEvt.clientX,
+      y: startCoords.y - moveEvt.clientY
+    };
+
+    startCoords = {
+      x: moveEvt.clientX,
+      y: moveEvt.clientY
+    };
+
+    var newCordsX = mapMainPointer.offsetLeft - shift.x;
+    var newCordsY = mapMainPointer.offsetTop - shift.y;
+
+    newCordsX = createRangeValueCords(newCordsX, 0 - SIZE_MAIN_PIN_X / 2, mapSizeX - SIZE_MAIN_PIN_X / 2);
+    newCordsY = createRangeValueCords(newCordsY, 130, 630);
+
+    mapMainPointer.style.top = newCordsY + 'px';
+    mapMainPointer.style.left = newCordsX + 'px';
+
+    setAdress();
+  };
+
+  var onMouseUp = function (upEvt) {
+    upEvt.preventDefault();
+
+    if (isFirstMove) {
+      activateMap();
+      renderPins(announcements);
+      isFirstMove = false;
+    }
+
+    setAdress();
+
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+  };
+
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
+});
+
+// КОНЕЦ DRAG AND DROP
+
+// активация карты при нажатии на ENTER
+
+var onMainPinFirstEnterPress = function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    activateMap();
+    setAdress();
+    renderPins(announcements);
+    isFirstMove = false;
+    mapMainPointer.removeEventListener('keydown', onMainPinFirstEnterPress);
+  }
+};
+
+mapMainPointer.addEventListener('keydown', onMainPinFirstEnterPress);
