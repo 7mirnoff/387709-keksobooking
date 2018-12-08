@@ -98,4 +98,11 @@
   selectTimeout.addEventListener('change', function () {
     synchronizationSelectValue(selectTimeout, selectTimein);
   });
+
+  var form = document.querySelector('.ad-form');
+
+  form.addEventListener('submit', function (evt) {
+    window.backend.upload(new FormData(form), window.massegeForm.onLoad, window.massegeForm.onError);
+    evt.preventDefault();
+  });
 })();

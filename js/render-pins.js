@@ -30,11 +30,12 @@
       var pin = createMapPin(item);
       pin.addEventListener('click', function (evt) {
         evt.preventDefault();
-        window.renderCard(index);
+        window.renderCard(data[index]);
       });
       renderedPinsArr.push(pin);
       fragment.appendChild(pin);
     });
     similarListPins.appendChild(fragment);
   };
+
 })();

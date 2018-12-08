@@ -52,7 +52,7 @@
 
       if (isFirstMove) {
         window.triggerMap.activate();
-        window.renderPins(window.data);
+        window.backend.load(onLoad, onError);
         isFirstMove = false;
       }
 
@@ -71,11 +71,28 @@
     if (evt.keyCode === window.util.ENTER_KEYCODE) {
       window.triggerMap.activate();
       window.setAdress();
-      window.renderPins(window.data);
+      window.backend.load(onLoad, onError);
       isFirstMove = false;
       mapMainPointer.removeEventListener('keydown', onMainPinFirstEnterPress);
     }
   };
 
   mapMainPointer.addEventListener('keydown', onMainPinFirstEnterPress);
+
+  // обработчики успешной и неуспешной загрузки объявлений
+  var onLoad = function (data) {
+    window.renderPins(data);
+  };
+
+  var onError = function (errorMessage) {
+    var node = document.createElement('div');
+    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
+    node.style.position = 'absolute';
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = '30px';
+    node.textContent = errorMessage;
+    document.body.insertAdjacentElement('afterbegin', node);
+  };
+
 })();

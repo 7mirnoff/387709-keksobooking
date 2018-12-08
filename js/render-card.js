@@ -79,7 +79,7 @@
     // закрываем открытое объявление
     closePopup();
     // отрисовываем карточку объявления c индексом index
-    currentCard = createCard(window.data[index]);
+    currentCard = createCard(index);
     map.insertBefore(currentCard, map.querySelector('.map__filters-container'));
 
     // сразу ищем кнопку закрыть и вешаем на нее событие закрытия
