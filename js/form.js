@@ -105,4 +105,19 @@
     window.backend.upload(new FormData(form), window.massegeForm.onLoad, window.massegeForm.onError);
     evt.preventDefault();
   });
+
+  var resetButton = document.querySelector('.ad-form__reset');
+
+  resetButton.addEventListener('click', function (evtReset) {
+    evtReset.preventDefault();
+    form.reset();
+
+    window.triggerMap.deactivate();
+    window.setAdress();
+
+    synchronizationRoom();
+    changeMinPrice();
+
+    window.util.isFirstMove = true;
+  });
 })();

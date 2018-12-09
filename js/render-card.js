@@ -67,23 +67,22 @@
 
   // функция удаления объявления
   var closePopup = function () {
-    if (currentCard) {
-      currentCard.remove();
+    if (window.util.currentCard) {
+      window.util.currentCard.remove();
       document.removeEventListener('keydown', onPopupEscPress);
     }
   };
 
   // функция открытия объявления
-  var currentCard = null;
   window.renderCard = function (index) {
     // закрываем открытое объявление
     closePopup();
     // отрисовываем карточку объявления c индексом index
-    currentCard = createCard(index);
-    map.insertBefore(currentCard, map.querySelector('.map__filters-container'));
+    window.util.currentCard = createCard(index);
+    map.insertBefore(window.util.currentCard, map.querySelector('.map__filters-container'));
 
     // сразу ищем кнопку закрыть и вешаем на нее событие закрытия
-    var cardClose = currentCard.querySelector('.popup__close'); // кнопка закрыть
+    var cardClose = window.util.currentCard.querySelector('.popup__close'); // кнопка закрыть
     cardClose.addEventListener('click', function () {
       closePopup();
     });

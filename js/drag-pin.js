@@ -3,7 +3,6 @@
 (function () {
   var mapMainPointer = document.querySelector('.map__pin--main');
   var mapSizeX = document.querySelector('.map__pins').offsetWidth;
-  var isFirstMove = true;
 
   var createRangeValueCords = function (cords, min, max) {
     if (cords <= min) {
@@ -50,10 +49,10 @@
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
 
-      if (isFirstMove) {
+      if (window.util.isFirstMove) {
         window.triggerMap.activate();
         window.backend.load(onLoad, onError);
-        isFirstMove = false;
+        window.util.isFirstMove = false;
       }
 
       window.setAdress();
@@ -72,7 +71,7 @@
       window.triggerMap.activate();
       window.setAdress();
       window.backend.load(onLoad, onError);
-      isFirstMove = false;
+      window.util.isFirstMove = false;
       mapMainPointer.removeEventListener('keydown', onMainPinFirstEnterPress);
     }
   };

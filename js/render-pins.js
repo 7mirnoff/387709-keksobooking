@@ -22,9 +22,8 @@
   };
 
   // отрисовываем набор меток на карте
-  var renderedPinsArr = []; // массив для хранения отрисованных меток
-
   window.renderPins = function (data) {
+    window.util.currentPins = [];
     var fragment = document.createDocumentFragment();
     data.forEach(function (item, index) {
       var pin = createMapPin(item);
@@ -32,7 +31,7 @@
         evt.preventDefault();
         window.renderCard(data[index]);
       });
-      renderedPinsArr.push(pin);
+      window.util.currentPins.push(pin);
       fragment.appendChild(pin);
     });
     similarListPins.appendChild(fragment);
