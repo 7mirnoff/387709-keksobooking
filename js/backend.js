@@ -1,6 +1,9 @@
 'use strict';
 
 (function () {
+  var URL_UPLOAD = 'https://js.dump.academy/keksobooking1';
+  var URL_LOAD = 'https://js.dump.academy/keksobooking/data';
+  var TIME_OUT = 10000;
   // AJAX отправка данных объявления
   var upload = function (data, onLoad, onError) {
     var xhr = new XMLHttpRequest();
@@ -20,9 +23,9 @@
       onError();
     });
 
-    xhr.timeout = 10000; // 10s
+    xhr.timeout = TIME_OUT;
 
-    xhr.open('POST', window.util.URL_UPLOAD);
+    xhr.open('POST', URL_UPLOAD);
     xhr.send(data);
   };
   // AJAX загрузка объявлений
@@ -44,9 +47,9 @@
       onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
     });
 
-    xhr.timeout = 10000; // 10s
+    xhr.timeout = TIME_OUT;
 
-    xhr.open('GET', window.util.URL_LOAD);
+    xhr.open('GET', URL_LOAD);
     xhr.send();
   };
 
