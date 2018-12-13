@@ -4,11 +4,21 @@
   var pinMain = map.querySelector('.map__pin--main');
   var cbHandler = null;
 
-  function activeMapHandler(event) {
-    event.preventDefault();
+  function activeMapHandler(evt) {
+    evt.preventDefault();
     cbHandler();
     pinMain.removeEventListener('mouseup', activeMapHandler);
+    pinMain.removeEventListener('keydown', onPinEnterPress);
   }
+
+  var onPinEnterPress = function (evt) {
+    if (evt.keyCode === window.util.ENTER_KEYCODE) {
+      evt.preventDefault();
+      cbHandler();
+      pinMain.removeEventListener('mouseup', activeMapHandler);
+      pinMain.removeEventListener('keydown', onPinEnterPress);
+    }
+  };
 
   function activateMap() {
     map.classList.remove('map--faded');
@@ -21,6 +31,7 @@
   function setHandlers(handler) {
     cbHandler = handler;
     pinMain.addEventListener('mouseup', activeMapHandler);
+    pinMain.addEventListener('keydown', onPinEnterPress);
   }
 
   window.map = {

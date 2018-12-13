@@ -4,11 +4,11 @@
   var data = null;
 
   window.data = {
-    get: function() {
+    get: function () {
       return data;
     },
-    set: function(newData) {
+    set: function (newData) {
       data = newData;
     }
-  }
+  };
 })();

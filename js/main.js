@@ -4,17 +4,20 @@
 
   function deActivePage() {
     window.map.deactivate(window.ads.remove);
-    window.adForm.deactivate();
+    window.form.deactivate();
+    window.form.init();
+    window.setAdress();
   }
   function activePage() {
     window.map.activate();
-    window.adForm.activate();
+    window.form.activate();
+    window.setAdress();
     window.ads.renderPins(window.data.get());
   }
   function loadDataHandler(event) {
     event.preventDefault();
     window.map.setHandlers(activePage);
-    window.adForm.setHandlers(deActivePage);
+    window.form.setHandlers(deActivePage);
   }
 
   document.addEventListener('DOMContentLoaded', function () {
@@ -24,7 +27,14 @@
       window.data.set(response);
       document.dispatchEvent(loadData);
     }, function (error) {
-      console.log(error);
+      var node = document.createElement('div');
+      node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
+      node.style.position = 'absolute';
+      node.style.left = 0;
+      node.style.right = 0;
+      node.style.fontSize = '30px';
+      node.textContent = error;
+      document.body.insertAdjacentElement('afterbegin', node);
     });
   });
 })();
