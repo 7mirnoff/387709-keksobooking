@@ -3,7 +3,6 @@
 (function () {
   var mapMainPointer = document.querySelector('.map__pin--main');
   var mapSizeX = document.querySelector('.map__pins').offsetWidth;
-  var isFirstMove = true;
 
   var createRangeValueCords = function (cords, min, max) {
     if (cords <= min) {
@@ -50,12 +49,6 @@
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
 
-      if (isFirstMove) {
-        window.triggerMap.activate();
-        window.renderPins(window.data);
-        isFirstMove = false;
-      }
-
       window.setAdress();
 
       document.removeEventListener('mousemove', onMouseMove);
@@ -65,17 +58,4 @@
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   });
-
-  // доступ с клавиатуры
-  var onMainPinFirstEnterPress = function (evt) {
-    if (evt.keyCode === window.util.ENTER_KEYCODE) {
-      window.triggerMap.activate();
-      window.setAdress();
-      window.renderPins(window.data);
-      isFirstMove = false;
-      mapMainPointer.removeEventListener('keydown', onMainPinFirstEnterPress);
-    }
-  };
-
-  mapMainPointer.addEventListener('keydown', onMainPinFirstEnterPress);
 })();
