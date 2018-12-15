@@ -2,6 +2,7 @@
 
 (function () {
   var form = document.querySelector('.ad-form');
+  var filters = document.querySelector('.map__filters');
   var resetButton = form.querySelector('.ad-form__reset');
 
   var fieldsetsArr = form.querySelectorAll('.ad-form__element');
@@ -127,6 +128,7 @@
     resetButton.addEventListener('click', function (evtReset) {
       evtReset.preventDefault();
       form.reset();
+      filters.reset();
 
       window.setAdress();
 

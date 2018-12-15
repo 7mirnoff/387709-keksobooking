@@ -4,6 +4,11 @@
   var pinMain = map.querySelector('.map__pin--main');
   var cbHandler = null;
 
+  function resetPinPisition() {
+    pinMain.style.left = window.util.DEFAULT_POSITION_PIN_X + 'px';
+    pinMain.style.top = window.util.DEFAULT_POSITION_PIN_Y + 'px';
+  }
+
   function activeMapHandler(evt) {
     evt.preventDefault();
     cbHandler();
@@ -27,6 +32,7 @@
     map.classList.add('map--faded');
     cb();
     pinMain.addEventListener('mouseup', activeMapHandler);
+    resetPinPisition();
   }
   function setHandlers(handler) {
     cbHandler = handler;

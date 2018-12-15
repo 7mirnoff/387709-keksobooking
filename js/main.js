@@ -2,23 +2,25 @@
 (function () {
   var loadData = new Event('loadData', {bubbles: true, cancelable: true});
 
-  function deActivePage() {
+  var deActivePage = function () {
     window.map.deactivate(window.ads.remove);
     window.form.deactivate();
     window.form.init();
     window.setAdress();
-  }
-  function activePage() {
+  };
+
+  var activePage = function () {
     window.map.activate();
     window.form.activate();
     window.setAdress();
     window.ads.renderPins(window.data.get());
-  }
-  function loadDataHandler(event) {
+  };
+
+  var loadDataHandler = function (event) {
     event.preventDefault();
     window.map.setHandlers(activePage);
     window.form.setHandlers(deActivePage);
-  }
+  };
 
   document.addEventListener('DOMContentLoaded', function () {
     deActivePage();
