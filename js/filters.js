@@ -1,5 +1,11 @@
 'use strict';
 (function () {
+  var LOW_PRICE = 10000;
+  var HIGH_PRICE = 50000;
+
+  var DEBOUNCE_INTERVAL = 600;
+  var debounceTimer = null;
+
   var filterHousingType = document.querySelector('#housing-type');
   var filterPrice = document.querySelector('#housing-price');
   var filterRooms = document.querySelector('#housing-rooms');
@@ -12,9 +18,6 @@
   filterPrice.addEventListener('change', filterData);
   filterFeatures.addEventListener('change', filterData);
   filterGuests.addEventListener('change', filterData);
-
-  var DEBOUNCE_INTERVAL = 600;
-  var debounceTimer = null;
 
   function filterData() {
 
@@ -34,11 +37,11 @@
 
         if (filterPrice.value === 'any') {
           status = true;
-        } else if (filterPrice.value === 'low' && price < 10000) {
+        } else if (filterPrice.value === 'low' && price < LOW_PRICE) {
           status = true;
-        } else if (filterPrice.value === 'middle' && (price >= 10000 && price <= 50000)) {
+        } else if (filterPrice.value === 'middle' && (price >= LOW_PRICE && price <= HIGH_PRICE)) {
           status = true;
-        } else if (filterPrice.value === 'high' && price > 50000) {
+        } else if (filterPrice.value === 'high' && price > HIGH_PRICE) {
           status = true;
         }
 
