@@ -2,6 +2,7 @@
 (function () {
   var SIZE_PIN_X = 50;
   var SIZE_PIN_Y = 70;
+  var MAX_RENDERING_PIN = 5;
 
   var renderedPins = [];
   var currentCard = null;
@@ -86,7 +87,7 @@
     }
   };
 
-  function createPin(data) {
+  var createPin = function (data) {
     var template = pinTemplate.cloneNode(true);
 
     template.style.left = data.location.x - SIZE_PIN_X / 2 + 'px';
@@ -95,11 +96,11 @@
     template.querySelector('img').alt = data.offer.title;
 
     return template;
-  }
+  };
 
-  function renderPins(data) {
+  var renderPins = function (data) {
     var fragment = document.createDocumentFragment();
-    data.forEach(function (item) {
+    data.slice(0, MAX_RENDERING_PIN).forEach(function (item) {
       var pin = createPin(item);
       pin.addEventListener('click', function (evt) {
         evt.preventDefault();
@@ -109,20 +110,22 @@
       fragment.appendChild(pin);
     });
     pinsContainer.appendChild(fragment);
-  }
+  };
+
+  var removePins = function () {
+    if (renderedPins.length) {
+      renderedPins.forEach(function (item) {
+        item.remove();
+      });
+      renderedPins = [];
+    }
+    if (currentCard) {
+      currentCard.remove();
+    }
+  };
 
   window.ads = {
     renderPins: renderPins,
-    remove: function () {
-      if (renderedPins.length) {
-        renderedPins.forEach(function (item) {
-          item.remove();
-        });
-        renderedPins = [];
-      }
-      if (currentCard) {
-        currentCard.remove();
-      }
-    }
+    remove: removePins
   };
 })();

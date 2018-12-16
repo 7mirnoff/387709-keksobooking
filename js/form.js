@@ -1,7 +1,10 @@
 'use strict';
 
 (function () {
+  var MAX_PRICE = 1000000;
+
   var form = document.querySelector('.ad-form');
+  var filters = document.querySelector('.map__filters');
   var resetButton = form.querySelector('.ad-form__reset');
 
   var fieldsetsArr = form.querySelectorAll('.ad-form__element');
@@ -42,7 +45,7 @@
 
     var priceInput = document.querySelector('#price');
 
-    settingInputNumber(priceInput, 'number', true, 1000000);
+    settingInputNumber(priceInput, 'number', true, MAX_PRICE);
 
     // функция настройки минимальной цены в зависимости от типа жилья
     var selectType = document.querySelector('#type');
@@ -127,6 +130,7 @@
     resetButton.addEventListener('click', function (evtReset) {
       evtReset.preventDefault();
       form.reset();
+      filters.reset();
 
       window.setAdress();
 
