@@ -100,6 +100,7 @@
 
   var renderPins = function (data) {
     var fragment = document.createDocumentFragment();
+    window.util.mixingArr(data);
     data.slice(0, MAX_RENDERING_PIN).forEach(function (item) {
       var pin = createPin(item);
       pin.addEventListener('click', function (evt) {

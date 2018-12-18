@@ -14,6 +14,18 @@
     }
   };
 
+  var mixingArr = function (array) {
+    var j;
+    var temporary;
+    for (var i = array.length - 1; i > 0; i--) {
+      j = Math.floor(Math.random() * (i + 1));
+      temporary = array[j];
+      array[j] = array[i];
+      array[i] = temporary;
+    }
+    return array;
+  };
+
   window.util = {
     ESC_KEYCODE: ESC_KEYCODE,
     ENTER_KEYCODE: ENTER_KEYCODE,
@@ -21,6 +33,7 @@
     SIZE_MAIN_PIN_Y: SIZE_MAIN_PIN_Y,
     DEFAULT_POSITION_PIN_X: DEFAULT_POSITION_PIN_X,
     DEFAULT_POSITION_PIN_Y: DEFAULT_POSITION_PIN_Y,
-    changeDisabled: changeDisabled
+    changeDisabled: changeDisabled,
+    mixingArr: mixingArr
   };
 })();
