@@ -9,21 +9,21 @@
 
   var fieldsetsArr = form.querySelectorAll('.ad-form__element');
 
-  function activateForm() {
+  var activateForm = function () {
     form.classList.remove('ad-form--disabled');
     window.util.changeDisabled(fieldsetsArr, false);
-  }
+  };
 
-  function deactivateForm() {
+  var deactivateForm = function () {
     form.classList.add('ad-form--disabled');
     window.util.changeDisabled(fieldsetsArr, true);
-  }
+  };
 
-  function setHandlers(handler) {
+  var setHandlers = function (handler) {
     resetButton.addEventListener('click', handler);
-  }
+  };
 
-  function initForm() {
+  var initForm = function () {
     var settingInputText = function (input, type, isRequired, minLength, maxLength) {
       input.type = type;
       input.required = isRequired;
@@ -133,7 +133,7 @@
 
       window.util.isFirstMove = true;
     });
-  }
+  };
 
   window.form = {
     activate: activateForm,

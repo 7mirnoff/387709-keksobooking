@@ -4,17 +4,17 @@
   var pinMain = map.querySelector('.map__pin--main');
   var cbHandler = null;
 
-  function resetPinPisition() {
+  var resetPinPisition = function () {
     pinMain.style.left = window.util.DEFAULT_POSITION_PIN_X + 'px';
     pinMain.style.top = window.util.DEFAULT_POSITION_PIN_Y + 'px';
-  }
+  };
 
-  function activeMapHandler(evt) {
+  var activeMapHandler = function (evt) {
     evt.preventDefault();
     cbHandler();
     pinMain.removeEventListener('mouseup', activeMapHandler);
     pinMain.removeEventListener('keydown', onPinEnterPress);
-  }
+  };
 
   var onPinEnterPress = function (evt) {
     if (evt.keyCode === window.util.ENTER_KEYCODE) {
@@ -25,20 +25,20 @@
     }
   };
 
-  function activateMap() {
+  var activateMap = function () {
     map.classList.remove('map--faded');
-  }
-  function deactivateMap(cb) {
+  };
+  var deactivateMap = function (cb) {
     map.classList.add('map--faded');
     cb();
     pinMain.addEventListener('mouseup', activeMapHandler);
     resetPinPisition();
-  }
-  function setHandlers(handler) {
+  };
+  var setHandlers = function (handler) {
     cbHandler = handler;
     pinMain.addEventListener('mouseup', activeMapHandler);
     pinMain.addEventListener('keydown', onPinEnterPress);
-  }
+  };
 
   window.map = {
     activate: activateMap,

@@ -19,7 +19,7 @@
   filterFeatures.addEventListener('change', filterData);
   filterGuests.addEventListener('change', filterData);
 
-  function filterData() {
+  var filterData = function () {
 
     var filter = function () {
       var featuresList = [];
@@ -65,5 +65,5 @@
     }
 
     debounceTimer = setTimeout(filter, DEBOUNCE_INTERVAL);
-  }
+  };
 })();
