@@ -13,12 +13,6 @@
   var filterFeatures = document.querySelector('#housing-features');
   var filterFeaturesList = filterFeatures.querySelectorAll('input');
 
-  filterHousingType.addEventListener('change', filterData);
-  filterRooms.addEventListener('change', filterData);
-  filterPrice.addEventListener('change', filterData);
-  filterFeatures.addEventListener('change', filterData);
-  filterGuests.addEventListener('change', filterData);
-
   var filterData = function () {
 
     var filter = function () {
@@ -66,4 +60,11 @@
 
     debounceTimer = setTimeout(filter, DEBOUNCE_INTERVAL);
   };
+
+  filterHousingType.addEventListener('change', filterData);
+  filterRooms.addEventListener('change', filterData);
+  filterPrice.addEventListener('change', filterData);
+  filterFeatures.addEventListener('change', filterData);
+  filterGuests.addEventListener('change', filterData);
+
 })();
