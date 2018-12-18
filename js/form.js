@@ -119,8 +119,6 @@
 
     synchronizationRoom();
     changeMinPrice();
-
-    window.util.isFirstMove = true;
   });
 
   var initForm = function () {
