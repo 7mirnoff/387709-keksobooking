@@ -11,12 +11,12 @@
 
   function activateForm() {
     form.classList.remove('ad-form--disabled');
-    window.changeDisabled(fieldsetsArr, false);
+    window.util.changeDisabled(fieldsetsArr, false);
   }
 
   function deactivateForm() {
     form.classList.add('ad-form--disabled');
-    window.changeDisabled(fieldsetsArr, true);
+    window.util.changeDisabled(fieldsetsArr, true);
   }
 
   function setHandlers(handler) {
@@ -88,7 +88,7 @@
       var availableCapacityArr = sizeRoomMap[valueSelectedRoomOption];
       var optionCapacityArr = selectCapacity.querySelectorAll('option');
 
-      window.changeDisabled(optionCapacityArr, true);
+      window.util.changeDisabled(optionCapacityArr, true);
 
       for (var m = 0; m < optionCapacityArr.length; m++) {
         for (var n = 0; n < availableCapacityArr.length; n++) {
