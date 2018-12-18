@@ -7,7 +7,9 @@
   var createRangeValueCords = function (cords, min, max) {
     if (cords <= min) {
       cords = min;
-    } else if (cords >= max) {
+    }
+
+    if (cords >= max) {
       cords = max;
     }
     return cords;
