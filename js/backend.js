@@ -4,7 +4,7 @@
   var URL_UPLOAD = 'https://js.dump.academy/keksobooking';
   var URL_LOAD = 'https://js.dump.academy/keksobooking/data';
   var TIME_OUT = 10000;
-  // AJAX отправка данных объявления
+
   var upload = function (data, onLoad, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
@@ -28,7 +28,7 @@
     xhr.open('POST', URL_UPLOAD);
     xhr.send(data);
   };
-  // AJAX загрузка объявлений
+
   var load = function (onLoad, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';

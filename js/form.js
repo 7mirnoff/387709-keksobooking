@@ -24,7 +24,6 @@
   }
 
   function initForm() {
-    // функция настройки текстового поля ввода
     var settingInputText = function (input, type, isRequired, minLength, maxLength) {
       input.type = type;
       input.required = isRequired;
@@ -36,7 +35,6 @@
 
     settingInputText(titleInput, 'text', true, 30, 100);
 
-    // функция настройки числового поля ввода
     var settingInputNumber = function (input, type, isRequired, maxValue) {
       input.type = type;
       input.required = isRequired;
@@ -47,7 +45,6 @@
 
     settingInputNumber(priceInput, 'number', true, MAX_PRICE);
 
-    // функция настройки минимальной цены в зависимости от типа жилья
     var selectType = document.querySelector('#type');
 
     var priceRoomMap = {
@@ -71,8 +68,6 @@
       changeMinPrice();
     });
 
-
-    // синхронизаця количества комнат и количества гостей
     var selectRooms = document.querySelector('#room_number');
     var selectCapacity = document.querySelector('#capacity');
 
@@ -106,7 +101,6 @@
       synchronizationRoom();
     });
 
-    // синхронизация времени заезда и выезда
     var selectTimein = document.querySelector('#timein');
     var selectTimeout = document.querySelector('#timeout');
 

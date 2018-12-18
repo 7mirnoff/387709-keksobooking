@@ -6,14 +6,14 @@
   var map = document.querySelector('.map');
 
   window.setAdress = function () {
-    var locationX; // координата X
-    var locationY; // координата Y
-    var arrowSize = 0; // размер стрелки маркера по умолчанию
-    var factorSize = 2; // коэфициент деления высоты пина для поиска центра
+    var locationX;
+    var locationY;
+    var arrowSize = 0;
+    var factorSize = 2;
 
-    addressPointer.readOnly = true; // устанавливаем поле только для чтения
+    addressPointer.readOnly = true;
 
-    if (!map.classList.contains('map--faded')) { // если карта активна, то при размере учитывать стрелку
+    if (!map.classList.contains('map--faded')) {
       arrowSize = parseInt(getComputedStyle(mapMainPointer, ':after').height, 10);
       factorSize = 1;
     }
