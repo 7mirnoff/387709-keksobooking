@@ -41,10 +41,18 @@
   var deactivateForm = function () {
     form.classList.add('ad-form--disabled');
     window.util.changeDisabled(fieldsetsArr, true);
+    form.reset();
+    filters.reset();
   };
 
   var setHandlers = function (handler) {
     resetButton.addEventListener('click', handler);
+
+    form.addEventListener('submit', function (evt) {
+      window.backend.upload(new FormData(form), window.massegeForm.onLoad, window.massegeForm.onError);
+      evt.preventDefault();
+      handler();
+    });
   };
 
   var settingInputText = function (input, type, isRequired, minLength, maxLength) {
@@ -103,22 +111,6 @@
 
   selectTimeout.addEventListener('change', function () {
     synchronizationSelectValue(selectTimeout, selectTimein);
-  });
-
-  form.addEventListener('submit', function (evt) {
-    window.backend.upload(new FormData(form), window.massegeForm.onLoad, window.massegeForm.onError);
-    evt.preventDefault();
-  });
-
-  resetButton.addEventListener('click', function (evtReset) {
-    evtReset.preventDefault();
-    form.reset();
-    filters.reset();
-
-    window.setAdress();
-
-    synchronizationRoom();
-    changeMinPrice();
   });
 
   var initForm = function () {
