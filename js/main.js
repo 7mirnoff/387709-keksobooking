@@ -2,28 +2,28 @@
 (function () {
   var loadData = new Event('loadData', {bubbles: true, cancelable: true});
 
-  var deActivePage = function () {
+  var deactivatePage = function () {
     window.map.deactivate(window.ads.remove);
     window.form.deactivate();
     window.form.init();
     window.setAdress();
   };
 
-  var activePage = function () {
+  var activatePage = function () {
     window.map.activate();
     window.form.activate();
     window.setAdress();
     window.ads.renderPins(window.data.get());
   };
 
-  var loadDataHandler = function (event) {
-    event.preventDefault();
-    window.map.setHandlers(activePage);
-    window.form.setHandlers(deActivePage);
+  var loadDataHandler = function (evt) {
+    evt.preventDefault();
+    window.map.setHandlers(activatePage);
+    window.form.setHandlers(deactivatePage);
   };
 
   document.addEventListener('DOMContentLoaded', function () {
-    deActivePage();
+    deactivatePage();
     document.addEventListener('loadData', loadDataHandler);
     window.backend.load(function (response) {
       window.data.set(response);

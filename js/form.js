@@ -55,14 +55,14 @@
     });
   };
 
-  var settingInputText = function (input, type, isRequired, minLength, maxLength) {
+  var setOptionsInputText = function (input, type, isRequired, minLength, maxLength) {
     input.type = type;
     input.required = isRequired;
     input.minLength = minLength;
     input.maxLength = maxLength;
   };
 
-  var settingInputNumber = function (input, type, isRequired, maxValue) {
+  var setOptionsInputNumber = function (input, type, isRequired, maxValue) {
     input.type = type;
     input.required = isRequired;
     input.max = maxValue;
@@ -80,7 +80,7 @@
     changeMinPrice();
   });
 
-  var synchronizationRoom = function () {
+  var synchronizeRoom = function () {
     var valueSelectedRoomOption = selectRooms.options[selectRooms.selectedIndex].value;
     var availableCapacityArr = sizeRoomMap[valueSelectedRoomOption];
     var optionCapacityArr = selectCapacity.querySelectorAll('option');
@@ -98,33 +98,33 @@
   };
 
   selectRooms.addEventListener('change', function () {
-    synchronizationRoom();
+    synchronizeRoom();
   });
 
-  var synchronizationSelectValue = function (selectRead, selectWrite) {
+  var synchronizeSelectValue = function (selectRead, selectWrite) {
     selectWrite.selectedIndex = selectRead.selectedIndex;
   };
 
   selectTimein.addEventListener('change', function () {
-    synchronizationSelectValue(selectTimein, selectTimeout);
+    synchronizeSelectValue(selectTimein, selectTimeout);
   });
 
   selectTimeout.addEventListener('change', function () {
-    synchronizationSelectValue(selectTimeout, selectTimein);
+    synchronizeSelectValue(selectTimeout, selectTimein);
   });
 
-  var initForm = function () {
-    settingInputText(titleInput, 'text', true, MIN_STRING, MAX_STRING);
-    settingInputNumber(priceInput, 'number', true, MAX_PRICE);
+  var initializeForm = function () {
+    setOptionsInputText(titleInput, 'text', true, MIN_STRING, MAX_STRING);
+    setOptionsInputNumber(priceInput, 'number', true, MAX_PRICE);
     changeMinPrice();
-    synchronizationRoom();
+    synchronizeRoom();
   };
 
   window.form = {
     activate: activateForm,
     deactivate: deactivateForm,
     setHandlers: setHandlers,
-    init: initForm
+    init: initializeForm
   };
 
 })();

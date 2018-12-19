@@ -6,8 +6,6 @@
 
   var renderedPins = [];
   var currentCard = null;
-  var map = document.querySelector('.map');
-  var pinsContainer = document.querySelector('.map__pins');
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
@@ -65,7 +63,7 @@
   var renderCard = function (index) {
     closeCard();
     currentCard = createCard(index);
-    map.insertBefore(currentCard, map.querySelector('.map__filters-container'));
+    window.util.map.insertBefore(currentCard, window.util.map.querySelector('.map__filters-container'));
     var cardClose = currentCard.querySelector('.popup__close');
     cardClose.addEventListener('click', function () {
       closeCard();
@@ -110,7 +108,7 @@
       renderedPins.push(pin);
       fragment.appendChild(pin);
     });
-    pinsContainer.appendChild(fragment);
+    window.util.pinsContainer.appendChild(fragment);
   };
 
   var removePins = function () {
