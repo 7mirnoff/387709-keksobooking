@@ -15,7 +15,7 @@
 
   var onFilterChange = function () {
 
-    var filter = function () {
+    var filterPins = function () {
       var featuresList = [];
       for (var i = 0; i < filterFeaturesList.length; i++) {
         if (filterFeaturesList[i].checked) {
@@ -27,19 +27,18 @@
         return evt.offer.type === filterHousingType.value || filterHousingType.value === 'any';
       }).filter(function (evt) {
         var price = evt.offer.price;
-        var status = false;
 
         if (filterPrice.value === 'any') {
-          status = true;
+          return true;
         } else if (filterPrice.value === 'low' && price < LOW_PRICE) {
-          status = true;
+          return true;
         } else if (filterPrice.value === 'middle' && (price >= LOW_PRICE && price <= HIGH_PRICE)) {
-          status = true;
+          return true;
         } else if (filterPrice.value === 'high' && price > HIGH_PRICE) {
-          status = true;
+          return true;
         }
 
-        return status;
+        return false;
       }).filter(function (evt) {
         return evt.offer.rooms === +filterRooms.value || filterRooms.value === 'any';
       }).filter(function (evt) {
@@ -58,7 +57,7 @@
       clearTimeout(debounceTimer);
     }
 
-    debounceTimer = setTimeout(filter, DEBOUNCE_INTERVAL);
+    debounceTimer = setTimeout(filterPins, DEBOUNCE_INTERVAL);
   };
 
   filterHousingType.addEventListener('change', onFilterChange);

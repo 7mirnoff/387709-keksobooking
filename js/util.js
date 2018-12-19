@@ -8,6 +8,10 @@
   var DEFAULT_POSITION_PIN_X = 601;
   var DEFAULT_POSITION_PIN_Y = 344;
 
+  var map = document.querySelector('.map');
+  var pinsContainer = document.querySelector('.map__pins');
+  var pinMain = map.querySelector('.map__pin--main');
+
   var changeDisabled = function (fieldsets, isDisabled) {
     for (var l = 0; l < fieldsets.length; l++) {
       fieldsets[l].disabled = isDisabled;
@@ -33,6 +37,9 @@
     SIZE_MAIN_PIN_Y: SIZE_MAIN_PIN_Y,
     DEFAULT_POSITION_PIN_X: DEFAULT_POSITION_PIN_X,
     DEFAULT_POSITION_PIN_Y: DEFAULT_POSITION_PIN_Y,
+    map: map,
+    pinsContainer: pinsContainer,
+    pinMain: pinMain,
     changeDisabled: changeDisabled,
     mixingArr: mixingArr
   };
