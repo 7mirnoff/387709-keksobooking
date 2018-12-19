@@ -20,7 +20,7 @@
     currentMessage = main.appendChild(similarLoadMassage.cloneNode(true));
 
     document.addEventListener('click', function () {
-      closeMessage(currentMessage);
+      closeMessage();
     });
 
     document.addEventListener('keydown', onMessageEscPress);
@@ -31,7 +31,7 @@
     currentMessage = main.appendChild(similarErrorMassage.cloneNode(true));
 
     document.addEventListener('click', function () {
-      closeMessage(currentMessage);
+      closeMessage();
     });
 
     document.addEventListener('keydown', onMessageEscPress);
