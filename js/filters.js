@@ -15,7 +15,7 @@
 
   var onFilterChange = function () {
 
-    var filter = function () {
+    var filterPins = function () {
       var featuresList = [];
       for (var i = 0; i < filterFeaturesList.length; i++) {
         if (filterFeaturesList[i].checked) {
@@ -57,7 +57,7 @@
       clearTimeout(debounceTimer);
     }
 
-    debounceTimer = setTimeout(filter, DEBOUNCE_INTERVAL);
+    debounceTimer = setTimeout(filterPins, DEBOUNCE_INTERVAL);
   };
 
   filterHousingType.addEventListener('change', onFilterChange);
