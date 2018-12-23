@@ -1,5 +1,8 @@
 'use strict';
 (function () {
+  var adFormAvatarUpload = document.querySelector('#avatar');
+  var adFormPhotoUpload = document.querySelector('#images');
+
   var loadData = new Event('loadData', {bubbles: true, cancelable: true});
 
   var deactivatePage = function () {
@@ -7,6 +10,7 @@
     window.form.deactivate();
     window.form.init();
     window.setAdress();
+    window.images.reset();
   };
 
   var activatePage = function () {
@@ -25,6 +29,10 @@
   document.addEventListener('DOMContentLoaded', function () {
     deactivatePage();
     document.addEventListener('loadData', loadDataHandler);
+
+    adFormAvatarUpload.addEventListener('change', window.images.singleFileUpload);
+    adFormPhotoUpload.addEventListener('change', window.images.multipleFileUpload);
+
     window.backend.load(function (response) {
       window.data.set(response);
       document.dispatchEvent(loadData);
